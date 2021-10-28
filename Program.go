@@ -65,6 +65,7 @@ func handleServerClient(conn net.Conn, connId int, connectionsRecord map[int]net
 	defer delete(connectionsRecord, connId)
 	defer conn.Close()
 
+	// Prints the remote addr just to check
 	fmt.Println(conn.RemoteAddr())
 
 	var buf [2048]byte
@@ -75,6 +76,7 @@ func handleServerClient(conn net.Conn, connId int, connectionsRecord map[int]net
 	for {
 		n, err := conn.Read(buf[:])
 
+		// If something goes wrong with the client connection, terminate this thread
 		if err != nil {
 			fmt.Print("[Error]")
 			fmt.Print(err)
